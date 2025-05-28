@@ -18,6 +18,8 @@ int maxIndexMenu, masIndexStruk;
 
 
 int main(){
+    printf("test test\n\n");
 
+    system("pause");
     return 0;
 }
