@@ -19,4 +19,5 @@ int maxIndexMenu, masIndexStruk;
 
 int main(){
 
+    return 0;
 }
