@@ -52,7 +52,15 @@ int search(char barang[50]){
     return -1;
 }
 
-void tambah() {
+void menuAwal(){
+    menuMakan[0].namaMenu[50] = "Nasi Goreng";
+    menuMakan[0].harga = 13000;
+    menuMakan[1].namaMenu[50] = "Mie Goreng";
+    menuMakan[1].harga = 10000;
+    maxIndexMenu = 2;
+}
+
+void tambahMenu() {
     char menuBaru[50];
     int harga;
     printf("\nMasukkan nama menu : ");
@@ -74,7 +82,6 @@ void tambah() {
         system("pause");
     }
 }
-
 
 int main(){
     printf("test test\n\n");
