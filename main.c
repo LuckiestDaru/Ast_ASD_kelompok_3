@@ -27,6 +27,7 @@ struct strukHarga{
 struct strukHarga strukPembelian[100];
 
 int maxIndexMenu;
+int jumlahAwalMenu = 20;
 
 //tanda kalo functionnya returnnya itu pointer
 //karena kalo array masuk ke parameter itu sebenernya yg di masukin pointernya jadi ga bisa langsung di return
@@ -75,8 +76,42 @@ void tambah() {
     }
 }
 
+void inisialisasiMenu() { 
+    char* daftarMenu[] = {
+        "Nasi Goreng", "Ayam Goreng", "Soto Ayam", "Bakso", "Mie Goreng",
+        "Rendang", "Gado-Gado", "Nasi Uduk", "Sate Ayam", "Pecel Lele",
+        "Sayur Asem", "Capcay", "Tahu Tempe", "Nasi Kuning", "Lontong Sayur",
+        "Rawon", "Gudeg", "Sop Buntut", "Ikan Bakar", "Kari Ayam"
+    };
+    int daftarHarga[] = {
+        15000, 17000, 14000, 13000, 15000,
+        20000, 12000, 13000, 18000, 14000,
+        10000, 12000, 8000, 13000, 14000,
+        16000, 15000, 25000, 18000, 16000
+    };
+
+    for (int i = 0; i < jumlahAwalMenu; i++) {
+        strcpy(menuMakan[i].namaMenu, daftarMenu[i]);
+        menuMakan[i].harga = daftarHarga[i];
+    }
+    maxIndexMenu = jumlahAwalMenu;
+}
+
+void tampilkanMenu(char* namaWarung) { 
+    printf("=== Selamat Datang di %s ===\n", namaWarung);
+    printf("Daftar Menu:\n");
+    for (int i = 0; i < maxIndexMenu; i++) {
+        printf("%2d. %-25s Rp %d\n", i + 1, menuMakan[i].namaMenu, menuMakan[i].harga);
+    }
+    printf("\n");
+}
 
 int main(){
+
+    char namaWarung[] = "Rumah Makan FUFUFAFA";
+    inisialisasiMenu();
+    tampilkanMenu(namaWarung);
+
     printf("test test\n\n");
 
     system("pause");
