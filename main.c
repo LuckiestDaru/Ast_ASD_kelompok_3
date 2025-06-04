@@ -106,6 +106,129 @@ void tampilkanMenu(char* namaWarung) {
     printf("\n");
 }
 
+void kalkulasi()
+{
+    system("cls");
+    int kode, jumlah;
+    char ulang;
+    int total = 0, subtotal;
+
+    do
+    {
+        system("cls");
+        printf("=== Selamat Datang di Rumah Makan FUFUFAFA ===\n");
+        printf("Daftar Menu:\n");
+        printf("1. Nasi Goreng     - Rp 15000\n");
+        printf("2. Ayam Goreng     - Rp 17000\n");
+        printf("3. Soto Ayam       - Rp 14000\n");
+        printf("4. Bakso           - Rp 13000\n");
+        printf("5. Mie Goreng      - Rp 15000\n");
+        printf("6. Rendang         - Rp 20000\n");
+        printf("7. Gado-Gado       - Rp 12000\n");
+        printf("8. Nasi Uduk       - Rp 13000\n");
+        printf("9. Sate Ayam       - Rp 18000\n");
+        printf("10. Pecel Lele     - Rp 14000\n");
+        printf("11. Sayur Asem     - Rp 10000\n");
+        printf("12. Capcay         - Rp 12000\n");
+        printf("13. Tahu Tempe     - Rp 8000\n");
+        printf("14. Nasi Kuning    - Rp 13000\n");
+        printf("15. Lontong Sayur  - Rp 14000\n");
+        printf("16. Rawon          - Rp 16000\n");
+        printf("17. Gudeg          - Rp 15000\n");
+        printf("18. Sop Buntut     - Rp 25000\n");
+        printf("19. Ikan Bakar     - Rp 18000\n");
+        printf("20. Kari Ayam      - Rp 16000\n");
+
+        printf("\nMasukkan kode menu (1-20): ");
+        scanf("%d", &kode);
+        printf("Jumlah porsi: ");
+        scanf("%d", &jumlah);
+
+        // Menentukan harga berdasarkan kode
+        int harga = 0;
+        switch(kode)
+        {
+        case 1:
+            harga = 15000;
+            break;
+        case 2:
+            harga = 17000;
+            break;
+        case 3:
+            harga = 14000;
+            break;
+        case 4:
+            harga = 13000;
+            break;
+        case 5:
+            harga = 15000;
+            break;
+        case 6:
+            harga = 20000;
+            break;
+        case 7:
+            harga = 12000;
+            break;
+        case 8:
+            harga = 13000;
+            break;
+        case 9:
+            harga = 18000;
+            break;
+        case 10:
+            harga = 14000;
+            break;
+        case 11:
+            harga = 10000;
+            break;
+        case 12:
+            harga = 12000;
+            break;
+        case 13:
+            harga = 8000;
+            break;
+        case 14:
+            harga = 13000;
+            break;
+        case 15:
+            harga = 14000;
+            break;
+        case 16:
+            harga = 16000;
+            break;
+        case 17:
+            harga = 15000;
+            break;
+        case 18:
+            harga = 25000;
+            break;
+        case 19:
+            harga = 18000;
+            break;
+        case 20:
+            harga = 16000;
+            break;
+        default:
+            printf("Kode tidak valid!\n");
+            continue;
+        }
+
+        subtotal = harga * jumlah;
+        total += subtotal;
+        printf("Subtotal: Rp %d\n", subtotal);
+
+        printf("Apakah ingin memesan lagi? (y/n): ");
+        scanf(" %c", &ulang);
+    }
+    while (ulang == 'y' || ulang == 'Y');
+
+    printf("\nTotal yang harus dibayar: Rp %d\n", total);
+    printf("Terima kasih telah berkunjung!\n");
+
+    return 0;
+}
+
+
 int main(){
 
     char namaWarung[] = "Rumah Makan FUFUFAFA";
