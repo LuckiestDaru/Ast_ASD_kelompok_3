@@ -8,8 +8,13 @@ struct akun{
     char nama[50];
     char password[20];
 };
-//ini array buat nampung akun 
-struct akun AkunBaru[50];
+//ini array buat nampung akun
+//"user" akun bawaan aja biar ga ribet:v
+struct akun AkunBaru[50] = {
+    {"user","user"}
+};
+
+int adaAkun = 1;
 
 //sama kayak di atas
 struct menuMakanan {
@@ -53,6 +58,31 @@ int search(char barang[50]){
     return -1;
 }
 
+void login() {
+    system("cls");
+    printf("=== LOGIN ===\n");
+    char inputNama[50];
+    char inputPw[20];
+
+    printf("Masukkan nama pengguna: ");
+    scanf("%s", inputNama);
+    getchar();
+
+    printf("Masukkan password: ");
+    scanf("%s", inputPw);
+    getchar();
+
+    for (int i = 0; i < adaAkun; i++) {
+        if (strcmp(AkunBaru[i].nama, inputNama) == 0 && strcmp(AkunBaru[i].password, inputPw) == 0) {
+            printf("Login berhasil! Selamat datang, %s!\n", AkunBaru[i].nama);
+            system("pause");
+        }else {
+            printf("Nama pengguna atau password salah.\n");
+            system("pause");
+        }
+    }
+}
+
 void tambahMenu() {
     char menuBaru[50];
     int harga;
@@ -65,7 +95,7 @@ void tambahMenu() {
     if(index == -1){
         strcpy(menuMakan[maxIndexMenu].namaMenu,menuBaru);
         menuMakan[maxIndexMenu].harga = harga;
-        
+
         printf("\nBarang berhasil ditambahkan!\n");
         maxIndexMenu++;
         system("pause");
@@ -76,7 +106,7 @@ void tambahMenu() {
     }
 }
 
-void inisialisasiMenu() { 
+void inisialisasiMenu() {
     char* daftarMenu[] = {
         "Nasi Goreng", "Ayam Goreng", "Soto Ayam", "Bakso", "Mie Goreng",
         "Rendang", "Gado-Gado", "Nasi Uduk", "Sate Ayam", "Pecel Lele",
@@ -97,7 +127,7 @@ void inisialisasiMenu() {
     maxIndexMenu = jumlahAwalMenu;
 }
 
-void tampilkanMenu(char* namaWarung) { 
+void tampilkanMenu(char* namaWarung) {
     printf("=== Selamat Datang di %s ===\n", namaWarung);
     printf("Daftar Menu:\n");
     for (int i = 0; i < maxIndexMenu; i++) {
@@ -224,18 +254,16 @@ void kalkulasi()
 
     printf("\nTotal yang harus dibayar: Rp %d\n", total);
     printf("Terima kasih telah berkunjung!\n");
-
-    return 0;
 }
 
 
 int main(){
 
+    login();
+    system("cls");
     char namaWarung[] = "Rumah Makan FUFUFAFA";
     inisialisasiMenu();
     tampilkanMenu(namaWarung);
-
-    printf("test test\n\n");
 
     system("pause");
     return 0;
