@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <tuple>
 
 //ini struct buat akun
 struct akun{
@@ -34,6 +35,10 @@ struct strukHarga strukPembelian[100];
 int maxIndexMenu;
 int jumlahAwalMenu = 20;
 
+//manggil ulang
+void buatAkun();
+int login_menu();
+
 //tanda kalo functionnya returnnya itu pointer
 //karena kalo array masuk ke parameter itu sebenernya yg di masukin pointernya jadi ga bisa langsung di return
 //makanya functionnya ada tanda * yg berarti itu function yang bentuk returnnya pointer
@@ -56,31 +61,6 @@ int search(char barang[50]){
         }
     }
     return -1;
-}
-
-void login() {
-    system("cls");
-    printf("=== LOGIN ===\n");
-    char inputNama[50];
-    char inputPw[20];
-
-    printf("Masukkan nama pengguna: ");
-    scanf("%s", inputNama);
-    getchar();
-
-    printf("Masukkan password: ");
-    scanf("%s", inputPw);
-    getchar();
-
-    for (int i = 0; i < adaAkun; i++) {
-        if (strcmp(AkunBaru[i].nama, inputNama) == 0 && strcmp(AkunBaru[i].password, inputPw) == 0) {
-            printf("Login berhasil! Selamat datang, %s!\n", AkunBaru[i].nama);
-            system("pause");
-        }else {
-            printf("Nama pengguna atau password salah.\n");
-            system("pause");
-        }
-    }
 }
 
 void tambahMenu() {
@@ -256,10 +236,129 @@ void kalkulasi()
     printf("Terima kasih telah berkunjung!\n");
 }
 
+int login() {
+    int loginStatus;
+    char coba;
+    do {
+        system("cls");
+        printf("=== LOGIN ===\n");
+        char inputNama[50];
+        char inputPw[20];
+
+        printf("Masukkan nama pengguna: ");
+        scanf("%s", inputNama);
+        getchar();
+
+        printf("Masukkan password: ");
+        scanf("%s", inputPw);
+        getchar();
+
+        for (int i = 0; i < adaAkun; i++) {
+            if (strcmp(AkunBaru[i].nama, inputNama) == 0 && strcmp(AkunBaru[i].password, inputPw) == 0) {
+                printf("Login berhasil! Selamat datang, %s!\n", AkunBaru[i].nama);
+                system("pause");
+
+                loginStatus = 1;
+                return(loginStatus);
+            }
+        }
+        printf("Nama pengguna atau password salah!\n");
+        do {
+            printf("Apakah ingin mecoba login kembali? y/n\n");
+            scanf("%c", &coba);
+        }while (coba != 'y' && coba != 'n');
+    }while (coba != 'n');
+    loginStatus = 0;
+    return (loginStatus);
+}
+
+void buatAkun(){
+    system("cls");
+    printf("=== Buat Akun Baru ===\n");
+
+    //biar akun ga lebih dari size akunBaru
+    if (adaAkun >= 50) {
+        printf("Maaf, kapasitas akun sudah penuh.\n");
+        system("pause");
+        return;
+    }
+
+    char inputNama[50];
+    char inputPw[20];
+
+    printf("Masukkan nama pengguna (tanpa spasi): ");
+    scanf("%s", inputNama);
+    getchar();
+
+    // biar nama akun ga ada yg sama
+    for (int i = 0; i < adaAkun; i++) {
+        if (strcmp(AkunBaru[i].nama, inputNama) == 0) {
+            printf("Nama pengguna sudah ada. Silakan gunakan nama lain.\n");
+            system("pause");
+            return;
+        }
+    }
+
+    printf("Masukkan password (tanpa spasi): ");
+    scanf("%s", inputPw);
+    getchar();
+
+    strcpy(AkunBaru[adaAkun].nama, inputNama);
+    strcpy(AkunBaru[adaAkun].password, inputPw);
+    adaAkun++;
+
+    printf("Akun baru berhasil dibuat\nTekan enter untuk melanjutkan...");
+    system("pause");
+    login_menu();
+}
+
+int login_menu() {
+    int pilLog,loginStatus;
+    do {
+        system("cls");
+
+        printf("======== Selamat Datang ========\n");
+        printf("Anda belum melakukan login\n");
+        printf("1. Login\n");
+        printf("2. Register\n");
+        printf("Pilihan anda : \n");
+        if (scanf("%d", &pilLog) != 1) {
+            while (getchar() != '\n');
+            pilLog = 0;
+        }
+
+        while (pilLog != 1 && pilLog != 2) {
+            printf("Tolong isi 1 atau 2..\nPilihan anda : \n");
+            while ( getchar() != '\n' );
+            if (scanf("%d", &pilLog) != 1) {
+                while (getchar() != '\n');
+                pilLog = 0;
+            }
+        }
+
+        switch (pilLog) {
+            case 1:
+                loginStatus = login();
+            break;
+            case 2:
+                buatAkun();
+            break;
+            default:
+                printf("Tolong isi 1 atau 2..\nPilihan anda : \n");
+            while ( getchar() != '\n' );
+            if (scanf("%d", &pilLog) != 1) {
+                while (getchar() != '\n');
+                pilLog = 0;
+            }
+            break;
+        }
+    }while (loginStatus == 0);
+    return (0);
+}
 
 int main(){
 
-    login();
+    login_menu();
     system("cls");
     char namaWarung[] = "Rumah Makan FUFUFAFA";
     inisialisasiMenu();
