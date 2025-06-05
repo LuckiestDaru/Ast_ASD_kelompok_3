@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <tuple>
 
 //ini struct buat akun
 struct akun{
