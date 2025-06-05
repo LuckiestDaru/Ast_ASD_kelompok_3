@@ -34,6 +34,21 @@ struct strukHarga strukPembelian[100];
 int maxIndexMenu;
 int jumlahAwalMenu = 20;
 
+struct anggotaKelompok {
+    char nama[100];
+    char nim[20];
+    char kontribusi[150];
+};
+
+struct anggotaKelompok tim[] = {
+    {"Zefanya Derby Gracia Lengkong", "672024071", "Menu utama dan menampilkan developer."},
+    {"Andaru Hanif Pergita", "672024094", "Menu register dan login."},
+    {"Natanael Waluyo Margatan", "672024103", "Menu menambah menu makanan."},
+    {"Rafael Abel Dimas Pangestu", "672024182", "Menu kalkulasi harga dan total pembelian."},
+    {"Eko Prasetyo", "672024247", "Menu menampilkan menu makanan."}
+};
+int jumlahAnggota = sizeof(tim) / sizeof(tim[0]);
+
 //manggil ulang
 void buatAkun();
 int login_menu();
@@ -355,6 +370,15 @@ int login_menu() {
     return (0);
 }
 
+void tampilkanCredits() {
+    printf("\n=================== CREDITS ===================\n");
+    printf("Program ini dibuat oleh:\n \n");
+    for (int i = 0; i < jumlahAnggota; i++) {
+        printf("%d. %s (%s)\n   -> %s\n \n", i + 1, tim[i].nama, tim[i].nim, tim[i].kontribusi);
+    }
+    printf("===============================================\n");
+}
+
 int main(){
 
     login_menu();
@@ -364,5 +388,10 @@ int main(){
     tampilkanMenu(namaWarung);
 
     system("pause");
+
+    tampilkanCredits();
+
+    system("pause");
+
     return 0;
 }
