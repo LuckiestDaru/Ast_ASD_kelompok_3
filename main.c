@@ -80,6 +80,7 @@ int search(char barang[50]){
 void tambahMenu() {
     char menuBaru[50];
     int harga;
+    getchar();
     printf("\nMasukkan nama menu : ");
     gets(menuBaru);
     printf("Masukkan harga menu : ");
