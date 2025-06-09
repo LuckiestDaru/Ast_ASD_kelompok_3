@@ -371,7 +371,8 @@ int login_menu() {
 }
 
 void tampilkanCredits() {
-    printf("\n=================== CREDITS ===================\n");
+    system("cls");
+    printf("\n=================== Credits ===================\n");
     printf("Program ini dibuat oleh:\n \n");
     for (int i = 0; i < jumlahAnggota; i++) {
         printf("%d. %s (%s)\n   -> %s\n \n", i + 1, tim[i].nama, tim[i].nim, tim[i].kontribusi);
@@ -380,18 +381,48 @@ void tampilkanCredits() {
 }
 
 int main(){
-
     login_menu();
     system("cls");
     char namaWarung[] = "Rumah Makan FUFUFAFA";
     inisialisasiMenu();
-    tampilkanMenu(namaWarung);
 
-    system("pause");
+    int pilihan;
 
-    tampilkanCredits();
+    do {
+        system("cls");
+        //jika perlu opsi menu utama bisa diganti
+        printf("======== Program Rumah Makan ========\n \n");
+        printf("1. Tampilkan Daftar Menu\n");
+        printf("2. Tambah Menu Makanan\n");
+        printf("3. Hitung Total Pembelian\n");
+        printf("4. Exit\n \n");
+        printf("=====================================\n");
+        printf("Pilih opsi (1-4): ");
 
-    system("pause");
+        if (scanf("%d", &pilihan) != 1) {
+            while (getchar() != '\n');
+            pilihan = 0;
+        }
+        //empty switch case sesuai request
+        switch (pilihan) {
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+                printf("Terima kasih telah menggunakan program ini!\n");
+                tampilkanCredits();
+                break;
+            default:
+                printf("Opsi tidak valid. Silakan pilih antara 1-4.\n");
+                system("pause");
+        }
+    } while (pilihan != 4);
 
     return 0;
 }
