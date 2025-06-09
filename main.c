@@ -373,6 +373,7 @@ int login_menu() {
 
 void tampilkanCredits() {
     system("cls");
+    printf("Perut kenyang, hati senang. Sampai jumpa!\n \n");
     printf("\n=================== Credits ===================\n");
     printf("Program ini dibuat oleh:\n \n");
     for (int i = 0; i < jumlahAnggota; i++) {
@@ -416,7 +417,6 @@ int main(){
 
                 break;
             case 4:
-                printf("Terima kasih telah menggunakan program ini!\n");
                 tampilkanCredits();
                 break;
             default:
