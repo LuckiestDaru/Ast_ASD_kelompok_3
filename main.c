@@ -373,13 +373,13 @@ int login_menu() {
 
 void tampilkanCredits() {
     system("cls");
-    printf("Perut kenyang, hati senang. Sampai jumpa!\n \n");
     printf("\n=================== Credits ===================\n");
     printf("Program ini dibuat oleh:\n \n");
     for (int i = 0; i < jumlahAnggota; i++) {
         printf("%d. %s (%s)\n   -> %s\n \n", i + 1, tim[i].nama, tim[i].nim, tim[i].kontribusi);
     }
     printf("===============================================\n");
+    printf("Perut kenyang, hati senang. Sampai jumpa!\n");
 }
 
 int main(){
