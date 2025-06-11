@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <conio.h>
 
 //ini struct buat akun
 struct akun{
@@ -50,7 +51,6 @@ struct anggotaKelompok tim[] = {
 int jumlahAnggota = sizeof(tim) / sizeof(tim[0]);
 
 //manggil ulang
-void buatAkun();
 int login_menu();
 
 int search(char barang[50]){
@@ -241,8 +241,8 @@ void kalkulasi()
 }
 
 int login() {
-    int loginStatus;
-    char coba;
+    int loginStatus,i;
+    char coba,ch;
     do {
         system("cls");
         printf("=== LOGIN ===\n");
@@ -254,19 +254,24 @@ int login() {
         getchar();
 
         printf("Masukkan password: ");
-        scanf("%s", inputPw);
-        getchar();
+        while ((ch = getch()) != 13) {
+            inputPw[i] = ch;
+            i++;
+            printf("*");
+        }
+        inputPw[i] = '\0';
+        
 
         for (int i = 0; i < adaAkun; i++) {
             if (strcmp(AkunBaru[i].nama, inputNama) == 0 && strcmp(AkunBaru[i].password, inputPw) == 0) {
-                printf("Login berhasil! Selamat datang, %s!\n", AkunBaru[i].nama);
+                printf("\nLogin berhasil! Selamat datang, %s!\n", AkunBaru[i].nama);
                 system("pause");
 
                 loginStatus = 1;
-                return(loginStatus);
+                return loginStatus;
             }
         }
-        printf("Nama pengguna atau password salah!\n");
+        printf("\nNama pengguna atau password salah!\n");
         do {
             printf("Apakah ingin mecoba login kembali? y/n\n");
             scanf("%c", &coba);
@@ -276,7 +281,10 @@ int login() {
     return (loginStatus);
 }
 
-void buatAkun(){
+int regisAkun(){
+    int loginStatus, i;
+    char ch;
+
     system("cls");
     printf("=== Buat Akun Baru ===\n");
 
@@ -284,7 +292,7 @@ void buatAkun(){
     if (adaAkun >= 50) {
         printf("Maaf, kapasitas akun sudah penuh.\n");
         system("pause");
-        return;
+        return loginStatus = 0;
     }
 
     char inputNama[50];
@@ -299,21 +307,25 @@ void buatAkun(){
         if (strcmp(AkunBaru[i].nama, inputNama) == 0) {
             printf("Nama pengguna sudah ada. Silakan gunakan nama lain.\n");
             system("pause");
-            return;
+            return loginStatus = 0;
         }
     }
 
     printf("Masukkan password (tanpa spasi): ");
-    scanf("%s", inputPw);
-    getchar();
+    while ((ch = getch()) != 13) {
+        inputPw[i] = ch;
+        i++;
+        printf("*");
+    }
+    inputPw[i] = '\0';
 
     strcpy(AkunBaru[adaAkun].nama, inputNama);
     strcpy(AkunBaru[adaAkun].password, inputPw);
     adaAkun++;
 
-    printf("Akun baru berhasil dibuat\nTekan enter untuk melanjutkan...");
-    system("pause");
-    return;
+    printf("\nAkun baru berhasil dibuat\nTekan enter untuk melanjutkan...");
+    getchar();
+    return loginStatus = 0;
 }
 
 int login_menu() {
@@ -345,7 +357,7 @@ int login_menu() {
                 loginStatus = login();
             break;
             case 2:
-                buatAkun();
+                loginStatus = regisAkun();
             break;
             default:
                 printf("Tolong isi 1 atau 2..\nPilihan anda : \n");
