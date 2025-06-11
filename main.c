@@ -372,16 +372,17 @@ void tampilkanCredits() {
 }
 
 int main(){
+    int pilihan;
+
     login_menu();
     system("cls");
     char namaWarung[] = "Rumah Makan FUFUFAFA";
     inisialisasiMenu();
 
-    int pilihan;
-
     do {
         system("cls");
-        //jika perlu opsi menu utama bisa diganti
+        //jika perlu opsi menu utama bisa diganti, btw aku liat di penjelasan buat pengerjaan tts kalo di setiap program bakalan ada 5 total opsi di menu?
+        //mungkin opsi no.3 kita dipisah jadi dua? opsi satu buat nambah menu ke daftar pembelian pelanggan, dan satunya buat liat total harga dari pesanan pelanggan?
         printf("======== Program Rumah Makan ========\n \n");
         printf("1. Tampilkan Daftar Menu\n");
         printf("2. Tambah Menu Makanan\n");
@@ -394,13 +395,16 @@ int main(){
             while (getchar() != '\n');
             pilihan = 0;
         }
-        //empty switch case sesuai request
+
         switch (pilihan) {
             case 1:
-
+                system("cls");
+                tampilkanMenu(namaWarung);
+                system("pause");
                 break;
             case 2:
-
+                system("cls");
+                tambahMenu();
                 break;
             case 3:
 
