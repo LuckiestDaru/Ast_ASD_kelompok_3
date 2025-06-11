@@ -313,7 +313,7 @@ void buatAkun(){
 
     printf("Akun baru berhasil dibuat\nTekan enter untuk melanjutkan...");
     system("pause");
-    login_menu();
+    return;
 }
 
 int login_menu() {
