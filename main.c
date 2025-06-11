@@ -241,7 +241,7 @@ void kalkulasi()
 }
 
 int login() {
-    int loginStatus,i;
+    int loginStatus,i = 0;
     char coba,ch;
     do {
         system("cls");
@@ -253,14 +253,22 @@ int login() {
         scanf("%s", inputNama);
         getchar();
 
+        //13 itu enter dan 8 itu backspace (hapues)
         printf("Masukkan password: ");
         while ((ch = getch()) != 13) {
-            inputPw[i] = ch;
-            i++;
-            printf("*");
+            if (ch == 8) {
+                if (i > 0) {
+                    i--;
+                    printf("\b \b");
+                }
+            } else {
+                inputPw[i] = ch;
+                i++;
+                printf("*");
+            }
         }
         inputPw[i] = '\0';
-        
+
 
         for (int i = 0; i < adaAkun; i++) {
             if (strcmp(AkunBaru[i].nama, inputNama) == 0 && strcmp(AkunBaru[i].password, inputPw) == 0) {
@@ -282,7 +290,7 @@ int login() {
 }
 
 int regisAkun(){
-    int loginStatus, i;
+    int loginStatus, i = 0;
     char ch;
 
     system("cls");
@@ -313,9 +321,16 @@ int regisAkun(){
 
     printf("Masukkan password (tanpa spasi): ");
     while ((ch = getch()) != 13) {
-        inputPw[i] = ch;
-        i++;
-        printf("*");
+        if (ch == 8) {
+            if (i > 0) {
+                i--;
+                printf("\b \b");
+            }
+        } else {
+            inputPw[i] = ch;
+            i++;
+            printf("*");
+        }
     }
     inputPw[i] = '\0';
 
