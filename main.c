@@ -53,24 +53,13 @@ int jumlahAnggota = sizeof(tim) / sizeof(tim[0]);
 void buatAkun();
 int login_menu();
 
-//tanda kalo functionnya returnnya itu pointer
-//karena kalo array masuk ke parameter itu sebenernya yg di masukin pointernya jadi ga bisa langsung di return
-//makanya functionnya ada tanda * yg berarti itu function yang bentuk returnnya pointer
-char * lower(char str[100]){
-    for(int i = 0; i < strlen(str);i++){
-        str[i] = tolower(str[i]);
-    }
-    return str;
-}
-
 int search(char barang[50]){
-    barang = lower(barang);
     char perbandingan [50];
     for(int i = 0; i < maxIndexMenu;i++){
         //strcpy itu string copy soalnya string ga bisa langsung di copy harus make strcpy yg awal itu variable tempatnya yg kedua target copynya
         strcpy(perbandingan, menuMakan[i].namaMenu);
         //strcmp itu buat compare returnnya itu integer kalo integernya 0 berarti sama yg di compare
-        if(strcmp(lower(perbandingan),barang) == 0){
+        if(strcasecmp(perbandingan,barang) == 0){
             return i;
         }
     }
