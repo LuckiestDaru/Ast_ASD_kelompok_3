@@ -320,13 +320,13 @@ int login_menu() {
 
 void tampilkanCredits() {
     system("cls");
-    printf("\n=================== Credits ===================\n");
+    printf("=================== Credits ===================\n");
     printf("Program ini dibuat oleh:\n \n");
     for (int i = 0; i < jumlahAnggota; i++) {
         printf("%d. %s (%s)\n   -> %s\n \n", i + 1, tim[i].nama, tim[i].nim, tim[i].kontribusi);
     }
     printf("-----------------------------------------------\n");
-    printf("Perut kenyang, hati senang. Sampai jumpa!\n");
+    printf("          Perut kenyang, hati senang!\n");
 }
 
 int main(){
@@ -344,10 +344,11 @@ int main(){
         printf("===== Program Rumah Makan =====\n");
         printf("1. Tampilkan Daftar Menu\n");
         printf("2. Tambah Menu Makanan\n");
-        printf("3. Hitung Total Pembelian\n");
-        printf("4. Exit\n");
+        printf("3. Pesan Menu\n");
+        printf("4. Credits\n");
+        printf("5. Exit\n");
         printf("-------------------------------\n");
-        printf("Pilih opsi (1-4): ");
+        printf("Pilih opsi (1-5): ");
 
         if (scanf("%d", &pilihan) != 1) {
             while (getchar() != '\n');
@@ -369,12 +370,18 @@ int main(){
                 break;
             case 4:
                 tampilkanCredits();
+                system("pause");
+                break;
+            case 5:
+                system("cls");
+                printf("Sampai berjumpa lagi!"); //change this to whatever yall please..
                 break;
             default:
-                printf("Opsi tidak valid. Silakan pilih antara 1-4.\n");
+                printf("Opsi tidak valid. Silakan pilih antara 1-5.\n");
                 system("pause");
         }
-    } while (pilihan != 4);
+    } while (pilihan != 5);
+
 
     return 0;
 }
