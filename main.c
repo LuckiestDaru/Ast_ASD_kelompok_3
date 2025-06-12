@@ -120,123 +120,54 @@ void tampilkanMenu(char* namaWarung) {
     printf("\n");
 }
 
-void kalkulasi()
-{
-    system("cls");
-    int kode, jumlah;
-    char ulang;
-    int total = 0, subtotal;
+void pemesanan() {
+    char namaPesanan[50];
+    int jumlahPesanan;
+    char lanjut;
+    int jumlahItem = 0;
 
-    do
-    {
+    do {
         system("cls");
-        printf("=== Selamat Datang di Rumah Makan FUFUFAFA ===\n");
-        printf("Daftar Menu:\n");
-        printf("1. Nasi Goreng     - Rp 15000\n");
-        printf("2. Ayam Goreng     - Rp 17000\n");
-        printf("3. Soto Ayam       - Rp 14000\n");
-        printf("4. Bakso           - Rp 13000\n");
-        printf("5. Mie Goreng      - Rp 15000\n");
-        printf("6. Rendang         - Rp 20000\n");
-        printf("7. Gado-Gado       - Rp 12000\n");
-        printf("8. Nasi Uduk       - Rp 13000\n");
-        printf("9. Sate Ayam       - Rp 18000\n");
-        printf("10. Pecel Lele     - Rp 14000\n");
-        printf("11. Sayur Asem     - Rp 10000\n");
-        printf("12. Capcay         - Rp 12000\n");
-        printf("13. Tahu Tempe     - Rp 8000\n");
-        printf("14. Nasi Kuning    - Rp 13000\n");
-        printf("15. Lontong Sayur  - Rp 14000\n");
-        printf("16. Rawon          - Rp 16000\n");
-        printf("17. Gudeg          - Rp 15000\n");
-        printf("18. Sop Buntut     - Rp 25000\n");
-        printf("19. Ikan Bakar     - Rp 18000\n");
-        printf("20. Kari Ayam      - Rp 16000\n");
+        tampilkanMenu("Rumah Makan FUFUFAFA");
 
-        printf("\nMasukkan kode menu (1-20): ");
-        scanf("%d", &kode);
-        printf("Jumlah porsi: ");
-        scanf("%d", &jumlah);
+        printf("Masukkan nama menu yang ingin dipesan: ");
+        getchar();
+        gets(namaPesanan);
+        int index = search(namaPesanan);
 
-        // Menentukan harga berdasarkan kode
-        int harga = 0;
-        switch(kode)
-        {
-        case 1:
-            harga = 15000;
-            break;
-        case 2:
-            harga = 17000;
-            break;
-        case 3:
-            harga = 14000;
-            break;
-        case 4:
-            harga = 13000;
-            break;
-        case 5:
-            harga = 15000;
-            break;
-        case 6:
-            harga = 20000;
-            break;
-        case 7:
-            harga = 12000;
-            break;
-        case 8:
-            harga = 13000;
-            break;
-        case 9:
-            harga = 18000;
-            break;
-        case 10:
-            harga = 14000;
-            break;
-        case 11:
-            harga = 10000;
-            break;
-        case 12:
-            harga = 12000;
-            break;
-        case 13:
-            harga = 8000;
-            break;
-        case 14:
-            harga = 13000;
-            break;
-        case 15:
-            harga = 14000;
-            break;
-        case 16:
-            harga = 16000;
-            break;
-        case 17:
-            harga = 15000;
-            break;
-        case 18:
-            harga = 25000;
-            break;
-        case 19:
-            harga = 18000;
-            break;
-        case 20:
-            harga = 16000;
-            break;
-        default:
-            printf("Kode tidak valid!\n");
-            continue;
+        if (index != -1) {
+            printf("Masukkan jumlah pesanan: ");
+            scanf("%d", &jumlahPesanan);
+
+            strcpy(strukPembelian[jumlahItem].namaMenu, menuMakan[index].namaMenu);
+            strukPembelian[jumlahItem].jumlah = jumlahPesanan;
+            strukPembelian[jumlahItem].harga = menuMakan[index].harga * jumlahPesanan;
+
+            jumlahItem++;
+            printf("Pesanan berhasil ditambahkan.\n");
+        } else {
+            printf("Menu tidak ditemukan!\n");
         }
 
-        subtotal = harga * jumlah;
-        total += subtotal;
-        printf("Subtotal: Rp %d\n", subtotal);
-
         printf("Apakah ingin memesan lagi? (y/n): ");
-        scanf(" %c", &ulang);
-    }
-    while (ulang == 'y' || ulang == 'Y');
+        getchar();
+        scanf("%c", &lanjut);
+    } while (tolower(lanjut) == 'y');
 
-    printf("\nTotal yang harus dibayar: Rp %d\n", total);
+    system("cls");
+    printf("============== Struk Pembelian ==============\n");
+    int totalHarga = 0;
+    for (int i = 0; i < jumlahItem; i++) {
+        printf("%2d. %-25s x%d = Rp %d\n",
+               i + 1,
+               strukPembelian[i].namaMenu,
+               strukPembelian[i].jumlah,
+               strukPembelian[i].harga);
+        totalHarga += strukPembelian[i].harga;
+    }
+    printf("Total Harga: Rp %d\n", totalHarga);
+    printf("=============================================\n");
+    system("pause");
     printf("Terima kasih telah berkunjung!\n");
 }
 
@@ -394,7 +325,7 @@ void tampilkanCredits() {
     for (int i = 0; i < jumlahAnggota; i++) {
         printf("%d. %s (%s)\n   -> %s\n \n", i + 1, tim[i].nama, tim[i].nim, tim[i].kontribusi);
     }
-    printf("===============================================\n");
+    printf("-----------------------------------------------\n");
     printf("Perut kenyang, hati senang. Sampai jumpa!\n");
 }
 
@@ -410,12 +341,12 @@ int main(){
         system("cls");
         //jika perlu opsi menu utama bisa diganti, btw aku liat di penjelasan buat pengerjaan tts kalo di setiap program bakalan ada 5 total opsi di menu?
         //mungkin opsi no.3 kita dipisah jadi dua? opsi satu buat nambah menu ke daftar pembelian pelanggan, dan satunya buat liat total harga dari pesanan pelanggan?
-        printf("======== Program Rumah Makan ========\n \n");
+        printf("===== Program Rumah Makan =====\n");
         printf("1. Tampilkan Daftar Menu\n");
         printf("2. Tambah Menu Makanan\n");
         printf("3. Hitung Total Pembelian\n");
-        printf("4. Exit\n \n");
-        printf("=====================================\n");
+        printf("4. Exit\n");
+        printf("-------------------------------\n");
         printf("Pilih opsi (1-4): ");
 
         if (scanf("%d", &pilihan) != 1) {
@@ -434,7 +365,7 @@ int main(){
                 tambahMenu();
                 break;
             case 3:
-
+                pemesanan();
                 break;
             case 4:
                 tampilkanCredits();
