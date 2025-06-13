@@ -379,6 +379,7 @@ int main(){
             case 6:
                 system("cls");
                 printf("Sampai berjumpa lagi!"); //change this to whatever yall please..
+				system("pause");
                 break;
             default:
                 printf("Opsi tidak valid. Silakan pilih antara 1-5.\n");
