@@ -346,7 +346,8 @@ int main(){
         printf("2. Tambah Menu Makanan\n");
         printf("3. Pesan Menu\n");
         printf("4. Credits\n");
-        printf("5. Exit\n");
+        printf("5. Logout\n");
+        printf("6. Exit\n");
         printf("-------------------------------\n");
         printf("Pilih opsi (1-5): ");
 
@@ -373,6 +374,9 @@ int main(){
                 system("pause");
                 break;
             case 5:
+                login_menu();
+                break;
+            case 6:
                 system("cls");
                 printf("Sampai berjumpa lagi!"); //change this to whatever yall please..
                 break;
@@ -380,7 +384,7 @@ int main(){
                 printf("Opsi tidak valid. Silakan pilih antara 1-5.\n");
                 system("pause");
         }
-    } while (pilihan != 5);
+    } while (pilihan != 6);
 
 
     return 0;
