@@ -111,8 +111,32 @@ void inisialisasiMenu() {
     maxIndexMenu = jumlahAwalMenu;
 }
 
-void tampilkanMenu(char* namaWarung) {
-    printf("=== Selamat Datang di %s ===\n", namaWarung);
+void sort(int pilihan){
+    if(pilihan == 1){
+        for(int i = 0; i < maxIndexMenu;i++){
+            for(int j = 0; j < maxIndexMenu; j++){
+                if(menuMakan[i].harga <= menuMakan[j].harga){
+                    struct menuMakanan temp = menuMakan[i];
+                    menuMakan[i] = menuMakan[j];
+                    menuMakan[j] = temp;
+                }
+            }
+        }
+    }else if(pilihan == 2){
+        for(int i = 0; i < maxIndexMenu;i++){
+            for(int j = 0; j < maxIndexMenu; j++){
+                if(menuMakan[i].harga >= menuMakan[j].harga){
+                    struct menuMakanan temp = menuMakan[i];
+                    menuMakan[i] = menuMakan[j];
+                    menuMakan[j] = temp;
+                }
+            }
+        }
+    }
+}
+
+void tampilkanMenu() {
+    printf("=== Selamat Datang di Rumah Makan FUFUFAFA ===\n");
     printf("Daftar Menu:\n");
     for (int i = 0; i < maxIndexMenu; i++) {
         printf("%2d. %-25s Rp %.0f\n", i + 1, menuMakan[i].namaMenu, menuMakan[i].harga);
@@ -120,11 +144,41 @@ void tampilkanMenu(char* namaWarung) {
     printf("\n");
 }
 
+void tampilkan(){
+    int pilihan;
+    do{
+        tampilkanMenu("Rumah Makan FUFUFAFA");
+        getchar();
+        printf("1. Tampilkan dari yang termurah sampai yang termahal\n");
+        printf("2. Tampilkan dari yang termahal sampai yang termurah\n");
+        printf("3. Exit\n");
+        printf("Silahlan Memilih (1-3) : ");
+        scanf("%d",&pilihan);
+        system("cls");
+        switch (pilihan)
+            {
+            case 1:
+                sort(pilihan);
+                break;
+            case 2:
+                sort(pilihan);
+                break;
+            case 3:
+                printf("bye");
+                break;
+            default:
+                printf("Pilihan tidak valid silahkan (pilih 1-3)");
+                break;
+            }
+    }while(pilihan != 3);
+
+}
+
 void updateMenu(){
     system("cls");
     char menu [100];
     float hargaBaru;
-    tampilkanMenu("Rumah Makan FUFUFAFA");
+    tampilkanMenu();
     printf("Masukkan nama menu yang ingin di ganti harganya : ");
     getchar();
     gets(menu);
@@ -381,8 +435,7 @@ int main(){
         switch (pilihan) {
             case 1:
                 system("cls");
-                tampilkanMenu(namaWarung);
-                system("pause");
+                tampilkan();
                 break;
             case 2:
                 system("cls");
