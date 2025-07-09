@@ -32,8 +32,7 @@ struct strukHarga{
 };
 struct strukHarga strukPembelian[100];
 
-int maxIndexMenu;
-int jumlahAwalMenu = 20;
+int maxIndexMenu = 20;
 
 struct anggotaKelompok {
     char nama[100];
@@ -104,11 +103,10 @@ void inisialisasiMenu() {
         16000, 15000, 25000, 18000, 16000
     };
 
-    for (int i = 0; i < jumlahAwalMenu; i++) {
+    for (int i = 0; i < maxIndexMenu; i++) {
         strcpy(menuMakan[i].namaMenu, daftarMenu[i]);
         menuMakan[i].harga = daftarHarga[i];
     }
-    maxIndexMenu = jumlahAwalMenu;
 }
 
 void sort(int pilihan){
