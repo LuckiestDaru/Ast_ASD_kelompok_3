@@ -53,13 +53,13 @@ int jumlahAnggota = sizeof(tim) / sizeof(tim[0]);
 //manggil ulang
 int login_menu();
 
-int search(char barang[50]){
+int cariDiMenuMakanan(char menu[50]){
     char perbandingan [50];
     for(int i = 0; i < maxIndexMenu;i++){
         //strcpy itu string copy soalnya string ga bisa langsung di copy harus make strcpy yg awal itu variable tempatnya yg kedua target copynya
         strcpy(perbandingan, menuMakan[i].namaMenu);
         //strcmp itu buat compare returnnya itu integer kalo integernya 0 berarti sama yg di compare
-        if(strcasecmp(perbandingan,barang) == 0){
+        if(strcasecmp(perbandingan,menu) == 0){
             return i;
         }
     }
@@ -75,7 +75,7 @@ void tambahMenu() {
     printf("Masukkan harga menu : ");
     scanf("%f", &harga);
 
-    int index = search(menuBaru);
+    int index = cariDiMenuMakanan(menuBaru);
     if(index == -1){
         strcpy(menuMakan[maxIndexMenu].namaMenu,menuBaru);
         menuMakan[maxIndexMenu].harga = harga;
@@ -115,9 +115,30 @@ void tampilkanMenu(char* namaWarung) {
     printf("=== Selamat Datang di %s ===\n", namaWarung);
     printf("Daftar Menu:\n");
     for (int i = 0; i < maxIndexMenu; i++) {
-        printf("%2d. %-25s Rp %f\n", i + 1, menuMakan[i].namaMenu, menuMakan[i].harga);
+        printf("%2d. %-25s Rp %.0f\n", i + 1, menuMakan[i].namaMenu, menuMakan[i].harga);
     }
     printf("\n");
+}
+
+void updateMenu(){
+    system("cls");
+    char menu [100];
+    float hargaBaru;
+    tampilkanMenu("Rumah Makan FUFUFAFA");
+    printf("Masukkan nama menu yang ingin di ganti harganya : ");
+    getchar();
+    gets(menu);
+
+    int index = cariDiMenuMakanan(menu);
+    if(index != -1){
+        printf("Masukkan harga menu yang baru : ");
+        scanf("%f",&hargaBaru);
+        menuMakan[index].harga = hargaBaru;
+        printf("Harga menu berhasil di ubah\n");
+        system("pause");
+    }else{
+        printf("Menu tidak ada");
+    }
 }
 
 void pemesanan() {
@@ -133,7 +154,7 @@ void pemesanan() {
         printf("Masukkan nama menu yang ingin dipesan: ");
         getchar();
         gets(namaPesanan);
-        int index = search(namaPesanan);
+        int index = cariDiMenuMakanan(namaPesanan);
 
         if (index != -1) {
             printf("Masukkan jumlah pesanan: ");
@@ -158,7 +179,7 @@ void pemesanan() {
     printf("============== Struk Pembelian ==============\n");
     int totalHarga = 0;
     for (int i = 0; i < jumlahItem; i++) {
-        printf("%2d. %-25s x%d = Rp %f\n",
+        printf("%2d. %-25s x%d = Rp %.0f\n",
                i + 1,
                strukPembelian[i].namaMenu,
                strukPembelian[i].jumlah,
@@ -345,9 +366,10 @@ int main(){
         printf("1. Tampilkan Daftar Menu\n");
         printf("2. Tambah Menu Makanan\n");
         printf("3. Pesan Menu\n");
-        printf("4. Credits\n");
-        printf("5. Logout\n");
-        printf("6. Exit\n");
+        printf("4. Ganti Harga di Menu\n");
+        printf("5. Credits\n");
+        printf("6. Logout\n");
+        printf("7. Exit\n");
         printf("-------------------------------\n");
         printf("Pilih opsi (1-5): ");
 
@@ -370,13 +392,16 @@ int main(){
                 pemesanan();
                 break;
             case 4:
+                updateMenu();
+                break;
+            case 5:
                 tampilkanCredits();
                 system("pause");
                 break;
-            case 5:
+            case 6:
                 login_menu();
                 break;
-            case 6:
+            case 7:
                 system("cls");
                 printf("Sampai berjumpa lagi!"); //change this to whatever yall please..
 				system("pause");
@@ -385,7 +410,7 @@ int main(){
                 printf("Opsi tidak valid. Silakan pilih antara 1-5.\n");
                 system("pause");
         }
-    } while (pilihan != 6);
+    } while (pilihan != 7);
 
 
     return 0;
