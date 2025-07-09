@@ -20,7 +20,7 @@ int adaAkun = 1;
 //sama kayak di atas
 struct menuMakanan {
     char namaMenu[50];
-    int harga;
+    float harga;
 };
 struct menuMakanan menuMakan[100];
 
@@ -28,7 +28,7 @@ struct menuMakanan menuMakan[100];
 struct strukHarga{
     char namaMenu[50];
     int jumlah;
-    int harga;
+    float harga;
 };
 struct strukHarga strukPembelian[100];
 
@@ -68,12 +68,12 @@ int search(char barang[50]){
 
 void tambahMenu() {
     char menuBaru[50];
-    int harga;
+    float harga;
     getchar();
     printf("\nMasukkan nama menu : ");
     gets(menuBaru);
     printf("Masukkan harga menu : ");
-    scanf("%d", &harga);
+    scanf("%f", &harga);
 
     int index = search(menuBaru);
     if(index == -1){
@@ -97,7 +97,7 @@ void inisialisasiMenu() {
         "Sayur Asem", "Capcay", "Tahu Tempe", "Nasi Kuning", "Lontong Sayur",
         "Rawon", "Gudeg", "Sop Buntut", "Ikan Bakar", "Kari Ayam"
     };
-    int daftarHarga[] = {
+    float daftarHarga[] = {
         15000, 17000, 14000, 13000, 15000,
         20000, 12000, 13000, 18000, 14000,
         10000, 12000, 8000, 13000, 14000,
@@ -115,7 +115,7 @@ void tampilkanMenu(char* namaWarung) {
     printf("=== Selamat Datang di %s ===\n", namaWarung);
     printf("Daftar Menu:\n");
     for (int i = 0; i < maxIndexMenu; i++) {
-        printf("%2d. %-25s Rp %d\n", i + 1, menuMakan[i].namaMenu, menuMakan[i].harga);
+        printf("%2d. %-25s Rp %f\n", i + 1, menuMakan[i].namaMenu, menuMakan[i].harga);
     }
     printf("\n");
 }
@@ -158,7 +158,7 @@ void pemesanan() {
     printf("============== Struk Pembelian ==============\n");
     int totalHarga = 0;
     for (int i = 0; i < jumlahItem; i++) {
-        printf("%2d. %-25s x%d = Rp %d\n",
+        printf("%2d. %-25s x%d = Rp %f\n",
                i + 1,
                strukPembelian[i].namaMenu,
                strukPembelian[i].jumlah,
