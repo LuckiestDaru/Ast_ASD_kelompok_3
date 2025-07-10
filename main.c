@@ -275,7 +275,7 @@ void pemesanan() {
 
     do {
         system("cls");
-        tampilkanMenu("Rumah Makan FUFUFAFA");
+        tampilkanMenu();
 
         printf("Masukkan nama menu yang ingin dipesan: ");
         getchar();
@@ -292,6 +292,16 @@ void pemesanan() {
 
             jumlahItem++;
             printf("Pesanan berhasil ditambahkan.\n");
+
+            // ✅ Tampilkan semua yang sudah dipesan sejauh ini
+            printf("\n--- Daftar Pesanan Saat Ini ---\n");
+            for (int i = 0; i < jumlahItem; i++) {
+                printf("%2d. %-25s x%d = Rp %.0f\n", i + 1,
+                    strukPembelian[i].namaMenu,
+                    strukPembelian[i].jumlah,
+                    strukPembelian[i].harga);
+            }
+            printf("--------------------------------\n");
         } else {
             printf("Menu tidak ditemukan!\n");
         }
@@ -331,12 +341,49 @@ void pemesanan() {
         tampilkanTransaksi();
         system("pause");
     }
-    if (tolower(ubah) == 'y') {
-        updateTransaksi();
-        printf("\nStruk setelah update:\n");
+
+    // ✅ Tambahkan opsi untuk menghapus transaksi
+    printf("\nIngin menghapus transaksi? (y/n): ");
+    scanf("%s", ubah);
+    if (tolower(ubah[0]) == 'y') {
+        hapusTransaksi();
+        printf("\nStruk setelah penghapusan:\n");
         tampilkanTransaksi();
+        system("pause");
     }
 }
+
+void hapusTransaksi() {
+    if (head == NULL) {
+        printf("Belum ada transaksi yang bisa dihapus.\n");
+        return;
+    }
+
+    char namaHapus[50];
+    getchar();
+    printf("Masukkan nama menu yang ingin dihapus dari transaksi: ");
+    gets(namaHapus);
+
+    struct TransaksiNode *temp = head, *prev = NULL;
+
+    while (temp != NULL) {
+        if (strcasecmp(temp->namaMenu, namaHapus) == 0) {
+            if (prev == NULL) {
+                head = temp->next;
+            } else {
+                prev->next = temp->next;
+            }
+            free(temp);
+            printf("Transaksi berhasil dihapus!\n");
+            return;
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+
+    printf("Menu tidak ditemukan dalam transaksi.\n");
+}
+
 
 int login() {
     int loginStatus,i = 0;
