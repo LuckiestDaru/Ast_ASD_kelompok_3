@@ -8,14 +8,9 @@
 struct akun{
     char nama[50];
     char password[20];
-};
-//ini array buat nampung akun
-//"user" akun bawaan aja biar ga ribet:v
-struct akun AkunBaru[50] = {
-    {"user","user"}
-};
+}AkunBaru[50];
 
-int adaAkun = 1;
+int adaAkun = 0;
 
 //sama kayak di atas
 struct menuMakanan {
@@ -59,7 +54,7 @@ struct anggotaKelompok tim[] = {
 int jumlahAnggota = sizeof(tim) / sizeof(tim[0]);
 
 //manggil ulang
-int login_menu();
+void hapusTransaksi();
 
 int cariDiMenuMakanan(char menu[50]){
     char perbandingan [50];
@@ -154,7 +149,7 @@ void tampilkanMenu() {
 void tampilkan(){
     int pilihan;
     do{
-        tampilkanMenu("Rumah Makan FUFUFAFA");
+        tampilkanMenu();
         getchar();
         printf("1. Tampilkan dari yang termurah sampai yang termahal\n");
         printf("2. Tampilkan dari yang termahal sampai yang termurah\n");
@@ -205,7 +200,7 @@ void updateMenu(){
 void hapusMenu() {
     system("cls");
     char menuDihapus[50];
-    
+
     tampilkanMenu();
     printf("Masukkan nama menu yang ingin dihapus: ");
     getchar();
@@ -216,14 +211,14 @@ void hapusMenu() {
     if (index != -1) {
         for (int i = index; i < maxIndexMenu - 1; i++) {
             menuMakan[i] = menuMakan[i + 1];
-        } 
+        }
         maxIndexMenu--;
-        
+
         printf("\nMenu berhasil dihapus!\n");
     } else {
         printf("\nMenu tidak ditemukan!\n");
     }
-    
+
     system("pause");
 }
 
@@ -409,6 +404,45 @@ void hapusTransaksi() {
     printf("Menu tidak ditemukan dalam transaksi.\n");
 }
 
+void saveAkun(struct akun acc) {
+    FILE *file = fopen ("akun.txt", "a");
+
+    if (file == NULL) {
+        printf("Gagal membuka file!\n");
+        system("pause");
+        return;
+    }
+
+    fprintf(file, "%s,%s\n", acc.nama, acc.password);
+    fclose(file);
+}
+
+void bacaAkun() {
+    FILE *file = fopen("akun.txt", "r");
+
+    if (file == NULL) {
+        printf("File atau Data tidak ditemukan....\nmembuat file baru....\n");
+
+        strcpy(AkunBaru[0].nama, "user");
+        strcpy(AkunBaru[0].password, "user");
+        adaAkun = 1;
+
+        saveAkun(AkunBaru[0]);
+        printf("Silahkan login kembali mengunakan 'user'.\n");
+        system("pause");
+        return;
+    }
+
+    for (int i = 0; i < 50; i++) {
+        int hasilScan = fscanf(file,"%[^,],%[^\n]\n", AkunBaru[i].nama, AkunBaru[i].password);
+        if (hasilScan == 2) {
+            adaAkun++;
+        } else {
+            break;
+        }
+    }
+    fclose(file);
+}
 
 int login() {
     int loginStatus,i = 0;
@@ -506,6 +540,7 @@ int regisAkun(){
 
     strcpy(AkunBaru[adaAkun].nama, inputNama);
     strcpy(AkunBaru[adaAkun].password, inputPw);
+    saveAkun(AkunBaru[adaAkun]);
     adaAkun++;
 
     printf("\nAkun baru berhasil dibuat\nTekan enter untuk melanjutkan...");
@@ -571,6 +606,7 @@ void tampilkanCredits() {
 int main(){
     int pilihan;
 
+    bacaAkun();
     login_menu();
     system("cls");
     char namaWarung[] = "Rumah Makan FUFUFAFA";
@@ -632,7 +668,5 @@ int main(){
                 system("pause");
         }
     } while (pilihan != 8);
-
-
     return 0;
 }
