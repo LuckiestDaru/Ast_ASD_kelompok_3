@@ -202,6 +202,31 @@ void updateMenu(){
     }
 }
 
+void hapusMenu() {
+    system("cls");
+    char menuDihapus[50];
+    
+    tampilkanMenu();
+    printf("Masukkan nama menu yang ingin dihapus: ");
+    getchar();
+    gets(menuDihapus);
+
+    int index = cariDiMenuMakanan(menuDihapus);
+
+    if (index != -1) {
+        for (int i = index; i < maxIndexMenu - 1; i++) {
+            menuMakan[i] = menuMakan[i + 1];
+        } 
+        maxIndexMenu--;
+        
+        printf("\nMenu berhasil dihapus!\n");
+    } else {
+        printf("\nMenu tidak ditemukan!\n");
+    }
+    
+    system("pause");
+}
+
 void tambahTransaksi(char namaMenu[], int jumlah, float harga) {
     struct TransaksiNode* baru = (struct TransaksiNode*)malloc(sizeof(struct TransaksiNode));
     strcpy(baru->namaMenu, namaMenu);
@@ -560,11 +585,12 @@ int main(){
         printf("2. Tambah Menu Makanan\n");
         printf("3. Pesan Menu\n");
         printf("4. Ganti Harga di Menu\n");
-        printf("5. Credits\n");
-        printf("6. Logout\n");
-        printf("7. Exit\n");
+        printf("5. Hapus Menu Makanan\n");
+        printf("6. Credits\n");
+        printf("7. Logout\n");
+        printf("8. Exit\n");
         printf("-------------------------------\n");
-        printf("Pilih opsi (1-5): ");
+        printf("Pilih opsi (1-8): ");
 
         if (scanf("%d", &pilihan) != 1) {
             while (getchar() != '\n');
@@ -587,22 +613,25 @@ int main(){
                 updateMenu();
                 break;
             case 5:
+                hapusMenu();
+                break;
+            case 6:
                 tampilkanCredits();
                 system("pause");
                 break;
-            case 6:
+            case 7:
                 login_menu();
                 break;
-            case 7:
+            case 8:
                 system("cls");
                 printf("Sampai berjumpa lagi!"); //change this to whatever yall please..
 				system("pause");
                 break;
             default:
-                printf("Opsi tidak valid. Silakan pilih antara 1-5.\n");
+                printf("Opsi tidak valid. Silakan pilih antara 1-8.\n");
                 system("pause");
         }
-    } while (pilihan != 7);
+    } while (pilihan != 8);
 
 
     return 0;
