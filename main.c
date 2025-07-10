@@ -32,6 +32,15 @@ struct strukHarga{
 };
 struct strukHarga strukPembelian[100];
 
+struct TransaksiNode {
+    char namaMenu[50];
+    int jumlah;
+    float harga;
+    struct TransaksiNode* next;
+};
+
+struct TransaksiNode* head = NULL;
+
 int maxIndexMenu = 20;
 
 struct anggotaKelompok {
@@ -193,6 +202,71 @@ void updateMenu(){
     }
 }
 
+void tambahTransaksi(char namaMenu[], int jumlah, float harga) {
+    struct TransaksiNode* baru = (struct TransaksiNode*)malloc(sizeof(struct TransaksiNode));
+    strcpy(baru->namaMenu, namaMenu);
+    baru->jumlah = jumlah;
+    baru->harga = harga;
+    baru->next = NULL;
+
+    if (head == NULL) {
+        head = baru;
+    } else {
+        struct TransaksiNode* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = baru;
+    }
+}
+
+void tampilkanTransaksi() {
+    struct TransaksiNode* temp = head;
+    int no = 1;
+    float total = 0;
+
+    printf("============== Struk Pembelian ==============\n");
+    while (temp != NULL) {
+        printf("%2d. %-25s x%d = Rp %.0f\n", no++, temp->namaMenu, temp->jumlah, temp->harga);
+        total += temp->harga;
+        temp = temp->next;
+    }
+    printf("Total Harga: Rp %.0f\n", total);
+    printf("=============================================\n");
+}
+
+void updateTransaksi() {
+    if (head == NULL) {
+        printf("Belum ada transaksi yang bisa diupdate.\n");
+        return;
+    }
+
+    char menuUpdate[50];
+    int jumlahBaru;
+    float hargaPerItem;
+
+    getchar();
+    printf("Masukkan nama menu yang ingin diupdate: ");
+    gets(menuUpdate);
+
+    struct TransaksiNode* temp = head;
+    while (temp != NULL) {
+        if (strcasecmp(temp->namaMenu, menuUpdate) == 0) {
+            printf("Jumlah sebelumnya: %d\n", temp->jumlah);
+            printf("Masukkan jumlah baru: ");
+            scanf("%d", &jumlahBaru);
+            hargaPerItem = temp->harga / temp->jumlah;
+            temp->jumlah = jumlahBaru;
+            temp->harga = hargaPerItem * jumlahBaru;
+            printf("Transaksi berhasil diupdate!\n");
+            return;
+        }
+        temp = temp->next;
+    }
+
+    printf("Menu tidak ditemukan dalam transaksi.\n");
+}
+
 void pemesanan() {
     char namaPesanan[50];
     int jumlahPesanan;
@@ -242,6 +316,26 @@ void pemesanan() {
     printf("=============================================\n");
     system("pause");
     printf("Terima kasih telah berkunjung!\n");
+
+    for (int i = 0; i < jumlahItem; i++) {
+        tambahTransaksi(strukPembelian[i].namaMenu, strukPembelian[i].jumlah, strukPembelian[i].harga);
+    }
+
+    char ubah[10];
+    printf("\nIngin update transaksi? (y/n): ");
+    scanf("%s", ubah);
+
+    if (tolower(ubah[0]) == 'y') {
+        updateTransaksi();
+        printf("\nStruk setelah update:\n");
+        tampilkanTransaksi();
+        system("pause");
+    }
+    if (tolower(ubah) == 'y') {
+        updateTransaksi();
+        printf("\nStruk setelah update:\n");
+        tampilkanTransaksi();
+    }
 }
 
 int login() {
