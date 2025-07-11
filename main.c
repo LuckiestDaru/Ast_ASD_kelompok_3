@@ -166,7 +166,6 @@ void cariMenu(){
 void tampilkan(){
     int pilihan;
     do{
-        // getchar();
         tampilkanMenu();
         printf("1. Tampilkan dari yang termurah sampai yang termahal\n");
         printf("2. Tampilkan dari yang termahal sampai yang termurah\n");
