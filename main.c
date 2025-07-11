@@ -146,14 +146,32 @@ void tampilkanMenu() {
     printf("\n");
 }
 
+void cariMenu(){
+    system("cls");
+    char namaMenu[100];
+    getchar();
+    printf("Masukan nama menu yang mau di cari : ");
+    gets(namaMenu);
+
+    int index = cariDiMenuMakanan(namaMenu);
+    if(index != -1){
+        printf("Menu %s tersedia dengan harga %0.f\n",menuMakan[index].namaMenu,menuMakan[index].harga);
+    }else{
+        printf("menu tidak di temukan");
+    }
+    system("pause");
+    system("cls");
+}
+
 void tampilkan(){
     int pilihan;
     do{
+        // getchar();
         tampilkanMenu();
-        getchar();
         printf("1. Tampilkan dari yang termurah sampai yang termahal\n");
         printf("2. Tampilkan dari yang termahal sampai yang termurah\n");
-        printf("3. Exit\n");
+        printf("3. Cari Menu\n");
+        printf("4. Exit\n");
         printf("Silahlan Memilih (1-3) : ");
         scanf("%d",&pilihan);
         system("cls");
@@ -166,13 +184,15 @@ void tampilkan(){
                 sort(pilihan);
                 break;
             case 3:
-                printf("bye");
+                cariMenu();
+                break;
+            case 4:
                 break;
             default:
                 printf("Pilihan tidak valid silahkan (pilih 1-3)");
                 break;
             }
-    }while(pilihan != 3);
+    }while(pilihan != 4);
 
 }
 
